@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -29,6 +30,9 @@ public class PatientEntity {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private DoctorEntity doctor;
+
+	@OneToOne(fetch = FetchType.EAGER)
+	private AddressEntity address;
 
     @NotEmpty
 	@NotBlank

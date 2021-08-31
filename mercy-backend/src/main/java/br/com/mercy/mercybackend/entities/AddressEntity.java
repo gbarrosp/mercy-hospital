@@ -27,9 +27,6 @@ public class AddressEntity {
 	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	private PatientEntity patient;
-
 	@Column(name = "zip_code")
     private String zipCode;
 
