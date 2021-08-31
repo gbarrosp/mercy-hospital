@@ -4,7 +4,7 @@ CREATE TABLE doctor (
     username varchar(30),
     password varchar(100),
     phone_number varchar(90),
-    cpf varchar(90),
+    cpf varchar(20),
     gender varchar(20)
 );
 
