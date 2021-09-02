@@ -1,0 +1,68 @@
+<form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
+    <div class="panel" fxLayout="column" fxLayoutGap="15px">
+        <span>Informações</span>
+        <mat-form-field appearance="outline" class="no-padding">
+            <mat-label>Médico</mat-label>
+            <input matInput formControlName="doctor">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="no-padding">
+            <mat-label>Nome do Paciente</mat-label>
+            <input matInput formControlName="name">
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutGap="20px" fxFlex>
+            <mat-form-field appearance="outline" class="no-padding" fxFlex>
+                <mat-label>CPF</mat-label>
+                <input matInput formControlName="cpf">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="no-padding" fxFlex>
+                <mat-label>Telefone</mat-label>
+                <input matInput formControlName="phoneNumber">
+            </mat-form-field>
+        </div>
+
+        <span>Endereço</span>
+        <div fxLayout="row" fxLayoutGap="20px">
+            <mat-form-field appearance="outline" class="no-padding">
+                <mat-label>CEP</mat-label>
+                <input matInput formControlName="zipCode">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="no-padding">
+                <mat-label>Cidade</mat-label>
+                <input matInput formControlName="city">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="no-padding">
+                <mat-label>Estado</mat-label>
+                <input matInput formControlName="state">
+            </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutGap="20px">
+            <mat-form-field appearance="outline" class="no-padding" fxFlex="50">
+                <mat-label>Rua</mat-label>
+                <input matInput formControlName="streetName">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="no-padding" fxFlex="25">
+                <mat-label>Número</mat-label>
+                <input matInput formControlName="number">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="no-padding" fxFlex="25">
+                <mat-label>Complemento</mat-label>
+                <input matInput formControlName="additionalInfo">
+            </mat-form-field>
+        </div>
+        <div fxLayout="row">
+            <mat-form-field appearance="outline" class="no-padding" fxFlex="50">
+                <mat-label>Bairro</mat-label>
+                <input matInput formControlName="neighborhood">
+            </mat-form-field>
+        </div>
+
+        <span>Observação</span>
+        <mat-form-field appearance="outline" class="no-padding">
+            <textarea  matInput formControlName="observation"></textarea>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="space-between">
+            <button mat-flat-button color="basic" (click)="close()">FECHAR</button>
+            <button mat-flat-button type="submit" color="primary">SALVAR</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,43 @@
+<div class="container" fxLayoutAlign="center center">
+    <div class="panel" fxLayout="column" fxLayoutGap="15px">
+        <span class="title">
+            Mercy Hospital
+        </span>
+        <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+            <div fxLayout="column" fxLayoutGap="15px">
+                <mat-form-field appearance="outline">
+                    <mat-label>Nome</mat-label>
+                    <input matInput formControlName="name">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Usuário</mat-label>
+                    <input matInput formControlName="username">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>CPF</mat-label>
+                    <input matInput formControlName="cpf">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Gênero</mat-label>
+                    <mat-select formControlName="gender">
+                        <mat-option *ngFor="let gender of genders" [value]="gender">
+                          {{gender}}
+                        </mat-option>
+                      </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Senha</mat-label>
+                    <input matInput type="password" formControlName="password">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Repita a senha</mat-label>
+                    <input matInput type="password" formControlName="passwordMatch">
+                </mat-form-field>
+                <div fxLayout="row" fxLayoutAlign="space-around center" fxLayoutGap="15px">
+                    <button mat-stroked-button (click)="goToHome()" color="primary" fxFlex>VOLTAR</button>
+                    <button mat-raised-button type="submit" color="primary" fxFlex>CADASTRAR</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
