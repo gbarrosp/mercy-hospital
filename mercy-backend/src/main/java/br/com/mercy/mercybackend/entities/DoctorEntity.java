@@ -31,7 +31,7 @@ public class DoctorEntity {
 	private Long id;
 	
 	@Valid
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER, orphanRemoval = true )
 	@JoinColumn(name="doctor_user_id")
 	private UserEntity user;
 
