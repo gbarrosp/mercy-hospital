@@ -7,5 +7,5 @@ export class Doctor {
     cpf: string;
     gender: string;
 
-    user: User;
+    user: User = new User();
 }

@@ -6,4 +6,6 @@ import br.com.mercy.mercybackend.entities.DoctorEntity;
 
 public interface DoctorService {
     List<DoctorEntity> getAllDoctors();
+    
+    DoctorEntity newDoctor(DoctorEntity doctor);
 }

@@ -1,15 +1,12 @@
 package br.com.mercy.mercybackend.entities;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -23,26 +20,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "doctor")
-public class DoctorEntity {
+@Table(name = "doctor_user")
+public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", updatable = false, nullable = false)
+	@Basic(optional = false)
+	@Column(name = "id", unique =  true, nullable = false)
 	private Long id;
-	
-	@Valid
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="doctor_user_id")
-	private UserEntity user;
 
-    @NotEmpty
-	@Size(min = 6, max = 90)
-	private String name;
+	@NotEmpty
+	@Size(min = 6, max = 30)
+	private String username;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+	@NotEmpty
+	@Size(min = 6, max = 100)
+	private String password;
 
-    private String cpf;
-
-    private String gender;
 }

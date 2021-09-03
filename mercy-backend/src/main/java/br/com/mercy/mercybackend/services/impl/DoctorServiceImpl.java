@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.mercy.mercybackend.entities.DoctorEntity;
+import br.com.mercy.mercybackend.entities.UserEntity;
 import br.com.mercy.mercybackend.repositories.DoctorRepository;
+import br.com.mercy.mercybackend.repositories.UserRepository;
 import br.com.mercy.mercybackend.services.DoctorService;
 
 @Service
@@ -15,8 +17,21 @@ public class DoctorServiceImpl implements DoctorService {
     @Autowired
     private DoctorRepository doctorRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public List<DoctorEntity> getAllDoctors() {
         return doctorRepository.findAll();
+    }
+
+    @Override
+    public DoctorEntity newDoctor(DoctorEntity doctor) {
+        addUser(doctor.getUser());
+        return doctorRepository.save(doctor);
+    }
+
+    private UserEntity addUser(UserEntity user){
+        return userRepository.save(user);
     }
 }
