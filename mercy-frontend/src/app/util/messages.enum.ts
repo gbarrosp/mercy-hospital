@@ -1,4 +1,5 @@
 export enum MessagesEnum {
     SuccessUserSignUp = 'Usuário registrado, bem vindo!',
-    passwordNotMatch = 'As senhas digitadas não conferem',
+    PasswordNotMatch = 'As senhas digitadas não conferem',
+    InvalidForm = 'Preencha todo o formulário'
 }

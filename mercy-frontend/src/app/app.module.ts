@@ -27,6 +27,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { SystemLayoutComponent } from './components/system-layout/system-layout.component';
 import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { AuthService } from './services/views/auth.service';
+import { DoctorService } from './services/views/doctor.service';
 import { PatientService } from './services/views/patient.service';
 import { getPtPaginatorIntl } from './util/pt-paginator-intl';
 import { LandingRoutingModule } from './views/landing/landing-routing.module';
@@ -71,7 +72,8 @@ import { LandingComponent } from './views/landing/landing.component';
     { provide: MatPaginatorIntl, useValue: getPtPaginatorIntl()},
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}},
     AuthService,
-    PatientService
+    PatientService,
+    DoctorService
   ],
   bootstrap: [AppComponent]
 })

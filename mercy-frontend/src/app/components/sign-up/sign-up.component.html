@@ -5,19 +5,19 @@
         </span>
         <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
             <div fxLayout="column" fxLayoutGap="15px">
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" class="no-padding">
                     <mat-label>Nome</mat-label>
                     <input matInput formControlName="name">
                 </mat-form-field>
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" class="no-padding">
                     <mat-label>Usuário</mat-label>
                     <input matInput formControlName="username">
                 </mat-form-field>
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" class="no-padding">
                     <mat-label>CPF</mat-label>
                     <input matInput formControlName="cpf">
                 </mat-form-field>
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" class="no-padding">
                     <mat-label>Gênero</mat-label>
                     <mat-select formControlName="gender">
                         <mat-option *ngFor="let gender of genders" [value]="gender">
@@ -25,11 +25,11 @@
                         </mat-option>
                       </mat-select>
                 </mat-form-field>
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" class="no-padding">
                     <mat-label>Senha</mat-label>
                     <input matInput type="password" formControlName="password">
                 </mat-form-field>
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" class="no-padding">
                     <mat-label>Repita a senha</mat-label>
                     <input matInput type="password" formControlName="passwordMatch">
                 </mat-form-field>
