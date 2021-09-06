@@ -59,7 +59,8 @@ export class PatientsComponent implements OnInit, AfterViewInit{
   openDialog(data): void {
     this.dialogRef = this.dialog.open(PatientDialogComponent, {
       maxWidth: '1200px',
-      maxHeight: '800px',
+      maxHeight: '750px',
+      height: '90vh',
       data: data
     });
     this.dialogRef.afterClosed().subscribe(response => {

@@ -17,10 +17,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { NgxInputLoaderModule } from 'ngx-input-loader';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
-import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
-import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -66,10 +65,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     MatCardModule,
     MatIconModule,
     MatSelectModule,
-    NgxMatSelectSearchModule,
     MatToolbarModule,
     MatDialogModule,
-    MaterialFileInputModule,
+    NgSelectModule,
     MatSnackBarModule,
     MatExpansionModule,
     HttpClientModule,

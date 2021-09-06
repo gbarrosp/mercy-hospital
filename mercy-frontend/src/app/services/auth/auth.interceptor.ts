@@ -31,7 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
       }
     }, (error: any) => {
       if (error instanceof HttpErrorResponse) {
-        if (error.error.errors && error.error.errors.includes('token is expired')) {
+        if (error.error && error.error.error.includes('Unauthorized')) {
           localStorage.clear()
           window.location.reload()
         }

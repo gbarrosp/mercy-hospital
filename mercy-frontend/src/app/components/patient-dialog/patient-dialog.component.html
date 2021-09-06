@@ -1,14 +1,13 @@
 <form [formGroup]="patientForm" (ngSubmit)="onSubmit()">
     <div class="panel" fxLayout="column" fxLayoutGap="15px">
         <span>Informações</span>
-        <mat-form-field appearance="outline" class="no-padding">
-            <mat-label>Médico</mat-label>
-            <mat-select formControlName="doctorCpf">
-                <mat-option *ngFor="let doctor of doctors" [value]="doctor.cpf">
-                  {{doctor.name}}
-                </mat-option>
-              </mat-select>
-        </mat-form-field>
+        <ng-select [items]="doctors"
+                bindLabel="name"
+                appearance="outline"
+                placeholder="Nome do Médico"
+                class="no-padding"
+                formControlName="doctor">
+        </ng-select>
         <mat-form-field appearance="outline" class="no-padding">
             <mat-label>Nome do Paciente</mat-label>
             <input matInput formControlName="name">

@@ -24,6 +24,7 @@ export class PatientDialogComponent implements OnInit {
   doctors: Doctor[];
   showSuffix: boolean;
   isEditing: boolean = false;
+  doctorsNames: string[];
 
   constructor(
     private zipCodeService: ZipCodeService,
@@ -43,6 +44,7 @@ export class PatientDialogComponent implements OnInit {
   loadData(){
     this.doctorService.getAllDoctors().subscribe(response => {
       this.doctors = response
+      this.doctorsNames = response.map(d => d.name)
     })
   }
  
@@ -51,7 +53,7 @@ export class PatientDialogComponent implements OnInit {
       name: [null , Validators.required],
       cpf: [null , Validators.required],
       phoneNumber: [null , Validators.required],
-      doctorCpf: [null , Validators.required],
+      doctor: [null , Validators.required],
       zipCode: [null , Validators.required],
       streetName: [null , Validators.required],
       number: [null , Validators.required],
@@ -131,7 +133,7 @@ export class PatientDialogComponent implements OnInit {
       "name": this.patient.name,
       "cpf": this.patient.cpf,
       "phoneNumber": this.patient.phoneNumber,
-      "doctorCpf": this.patient.doctor.cpf,
+      "doctor": this.patient.doctor.cpf,
       "zipCode": this.patient.address.zipCode,
       "streetName": this.patient.address.streetName,
       "number": this.patient.address.number,
@@ -179,7 +181,7 @@ export class PatientDialogComponent implements OnInit {
       this.patient.name = formData.name
       this.patient.cpf = formData.cpf
       this.patient.phoneNumber = formData.phoneNumber
-      this.patient.doctor = this.getDoctorByCpf(formData.doctorCpf)
+      this.patient.doctor =formData.doctor
       this.patient.observation = formData.observation
 
       this.patient.address.city = formData.city
@@ -189,10 +191,6 @@ export class PatientDialogComponent implements OnInit {
       this.patient.address.additionalInfo = formData.additionalInfo
       this.patient.address.neighborhood = formData.neighborhood
       this.patient.address.zipCode = formData.zipCode
-  }
-
-  getDoctorByCpf(doctorCpf: string){
-    return this.doctors.find(doctor => doctor.cpf === doctorCpf)
   }
 
   close(reload: boolean){
