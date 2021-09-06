@@ -86,8 +86,15 @@ public class AuthAPIController {
 
 		try {
 			if(userService.existsByUsername(doctor.getUser().getUsername())) {
+                response.setError("Username not available");
 				return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
 			}
+
+			if(doctorService.existsByCpf(doctor.getCpf())) {
+                response.setError("Cpf not available");
+				return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+			}
+            
             String decodedPassword = doctor.getUser().getPassword();
 			UserEntity newUser = modelMapper.map(doctor.getUser(), UserEntity.class);
 			newUser.setPassword(encoder.encode(doctor.getUser().getPassword()));

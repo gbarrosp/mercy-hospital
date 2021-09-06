@@ -25,4 +25,9 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorRepository.save(doctor);
     }
 
+    @Override
+    public Boolean existsByCpf(String cpf) {
+        return doctorRepository.existsByCpf(cpf);
+    }
+
 }

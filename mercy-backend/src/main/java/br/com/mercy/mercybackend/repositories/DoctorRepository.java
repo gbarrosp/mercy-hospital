@@ -9,5 +9,5 @@ import br.com.mercy.mercybackend.entities.DoctorEntity;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<DoctorEntity, Id> {
-    
+    Boolean existsByCpf(String cpf);
 }
