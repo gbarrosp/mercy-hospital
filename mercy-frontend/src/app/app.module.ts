@@ -30,6 +30,7 @@ import { SystemLayoutComponent } from './components/system-layout/system-layout.
 import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { AuthService } from './services/views/auth.service';
 import { DoctorService } from './services/views/doctor.service';
+import { IBGEService } from './services/views/ibge.service';
 import { PatientService } from './services/views/patient.service';
 import { ZipCodeService } from './services/views/zipCode.service';
 import { getPtPaginatorIntl } from './util/pt-paginator-intl';
@@ -81,7 +82,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     AuthService,
     PatientService,
     DoctorService,
-    ZipCodeService
+    ZipCodeService,
+    IBGEService
   ],
   bootstrap: [AppComponent]
 })

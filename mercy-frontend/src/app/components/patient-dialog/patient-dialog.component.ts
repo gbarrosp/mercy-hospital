@@ -24,7 +24,6 @@ export class PatientDialogComponent implements OnInit {
   doctors: Doctor[];
   showSuffix: boolean;
   isEditing: boolean = false;
-  doctorsNames: string[];
 
   constructor(
     private zipCodeService: ZipCodeService,
@@ -44,7 +43,6 @@ export class PatientDialogComponent implements OnInit {
   loadData(){
     this.doctorService.getAllDoctors().subscribe(response => {
       this.doctors = response
-      this.doctorsNames = response.map(d => d.name)
     })
   }
  
@@ -133,7 +131,7 @@ export class PatientDialogComponent implements OnInit {
       "name": this.patient.name,
       "cpf": this.patient.cpf,
       "phoneNumber": this.patient.phoneNumber,
-      "doctor": this.patient.doctor.cpf,
+      "doctor": this.patient.doctor.name,
       "zipCode": this.patient.address.zipCode,
       "streetName": this.patient.address.streetName,
       "number": this.patient.address.number,
