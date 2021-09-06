@@ -20,7 +20,9 @@ export class PatientDialogComponent implements OnInit {
   patientForm: FormGroup;
   patient: Patient = new Patient()
   loadingZipCode: boolean = false;
+  invalidCpf: boolean = false;
   doctors: Doctor[];
+  showSuffix: boolean;
 
   constructor(
     private zipCodeService: ZipCodeService,
@@ -57,6 +59,11 @@ export class PatientDialogComponent implements OnInit {
       state: [null , Validators.required],
       observation: [null]
     });
+    this.checkZipCodeOnChanges()
+    this.validateCpf()
+  }
+
+  checkZipCodeOnChanges(){
     this.patientForm.controls['zipCode'].valueChanges.subscribe(zipCode => {
       if (zipCode.length === 8){
         this.loadingZipCode = true
@@ -75,6 +82,7 @@ export class PatientDialogComponent implements OnInit {
         })
       }
     })
+
   }
 
   onSubmit() {
@@ -82,7 +90,7 @@ export class PatientDialogComponent implements OnInit {
       this.setPatientData()
       this.patientService.newPatient(this.patient).subscribe(response => {
         this.snackbar.open(MessagesEnum.PatientAdded);
-        this.close()
+        this.close(true)
       }, error => {
         this.snackbar.open(generalExceptionTreatment(error), 'Fechar');
       }
@@ -90,6 +98,45 @@ export class PatientDialogComponent implements OnInit {
     } else {
       this.snackbar.open(MessagesEnum.InvalidForm);
     }
+  }
+
+  validateCpf() {
+    this.patientForm.controls['cpf'].valueChanges.subscribe(cpf => {
+      if (cpf.length === 11){
+        this.showSuffix = true
+        this.invalidCpf = false
+        let numbers = cpf.split("")
+        var regExp = new RegExp(numbers[0], "g");
+        if ((cpf.match(regExp) || []).length == 11) {
+          this.raiseInvalidCpf()
+        } else {
+          let i = 10
+          let firstValidatorSum = 0
+          let secondValidatorSum = 0
+          numbers.forEach((n, index) => {
+            if (index < 9){
+              firstValidatorSum += n * i
+            } 
+            if (index < 10){
+              secondValidatorSum += n * (i +1)
+            }
+            i--
+          })
+          let validFirstValidor = firstValidatorSum * 10 % 11 == numbers[9] ?  true : false
+          let validSecondValidor = secondValidatorSum * 10 % 11 == numbers[10] ?  true : false
+          if (!validFirstValidor && !validSecondValidor){
+            this.raiseInvalidCpf()
+          }
+        }
+      } else {
+        this.showSuffix = false
+      }
+    })
+  }
+
+  raiseInvalidCpf(){
+    this.invalidCpf = true
+    this.snackbar.open(MessagesEnum.InvalidCpf);
   }
 
   setPatientData(){
@@ -113,7 +160,7 @@ export class PatientDialogComponent implements OnInit {
     return this.doctors.find(doctor => doctor.cpf === doctorCpf)
   }
 
-  close(){
-    this.dialogRef.close()
+  close(reload: boolean){
+    this.dialogRef.close(reload)
   }
 }

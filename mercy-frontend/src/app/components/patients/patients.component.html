@@ -20,7 +20,7 @@
         <table mat-table [dataSource]="dataSource">
   
           <ng-container mat-sort-header matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Nome </th>
+            <th mat-header-cell *matHeaderCellDef> Paciente </th>
             <td mat-cell *matCellDef="let element"><a (click)="editPatient(element)">{{element.name}}</a></td>
           </ng-container>
   

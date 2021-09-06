@@ -21,6 +21,8 @@
             <mat-form-field appearance="outline" class="no-padding" fxFlex>
                 <mat-label>CPF</mat-label>
                 <input matInput mask="000.000.000-00" formControlName="cpf">
+                <mat-icon *ngIf="invalidCpf && showSuffix" matSuffix class="red-icon">cancel</mat-icon>
+                <mat-icon *ngIf="!invalidCpf && showSuffix" matSuffix class="green-icon">check_circle</mat-icon>
             </mat-form-field>
             <mat-form-field appearance="outline" class="no-padding" fxFlex>
                 <mat-label>Telefone</mat-label>
@@ -69,7 +71,7 @@
             <textarea  matInput formControlName="observation"></textarea>
         </mat-form-field>
         <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-            <button mat-raised-button color="basic" (click)="close()">FECHAR</button>
+            <button mat-raised-button color="basic" (click)="close(false)">FECHAR</button>
             <button mat-flat-button type="submit" color="primary">SALVAR</button>
         </div>
     </div>
