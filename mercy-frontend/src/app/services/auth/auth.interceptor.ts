@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Constants } from 'src/app/util/constants';
 
 
 
@@ -13,7 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
     // Adiciona a autorização (jwt Token)  no cabeçalho caso o usuário já tenha se autenticado
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-    if (currentUser && currentUser.token) {
+    if (currentUser && currentUser.token && !request.url.startsWith(Constants.VIA_CEP_API)) {
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${currentUser.token}`

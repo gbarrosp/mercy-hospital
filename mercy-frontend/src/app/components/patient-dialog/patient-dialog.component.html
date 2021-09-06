@@ -3,7 +3,15 @@
         <span>Informações</span>
         <mat-form-field appearance="outline" class="no-padding">
             <mat-label>Médico</mat-label>
-            <input matInput formControlName="doctor">
+            <!-- <input matInput formControlName="doctorCpf"> -->
+            <mat-select formControlName="doctorCpf" #singleSelect>
+                <!-- <mat-option>
+                  <ngx-mat-select-search [formControl]="bankFilterCtrl"></ngx-mat-select-search>
+                </mat-option> -->
+                <mat-option *ngFor="let doctor of doctors" [value]="doctor">
+                  {{doctor.name}}
+                </mat-option>
+              </mat-select>
         </mat-form-field>
         <mat-form-field appearance="outline" class="no-padding">
             <mat-label>Nome do Paciente</mat-label>
@@ -12,7 +20,7 @@
         <div fxLayout="row" fxLayoutGap="20px" fxFlex>
             <mat-form-field appearance="outline" class="no-padding" fxFlex>
                 <mat-label>CPF</mat-label>
-                <input matInput formControlName="cpf">
+                <input matInput mask="000.000.000-00" formControlName="cpf">
             </mat-form-field>
             <mat-form-field appearance="outline" class="no-padding" fxFlex>
                 <mat-label>Telefone</mat-label>
@@ -24,21 +32,21 @@
         <div fxLayout="row" fxLayoutGap="20px">
             <mat-form-field appearance="outline" class="no-padding">
                 <mat-label>CEP</mat-label>
-                <input matInput formControlName="zipCode">
+                <input matInput mask="00000-000" formControlName="zipCode">
             </mat-form-field>
             <mat-form-field appearance="outline" class="no-padding">
                 <mat-label>Cidade</mat-label>
-                <input matInput formControlName="city">
+                <input matInput formControlName="city" [ngxInputLoader]="loadingZipCode">
             </mat-form-field>
             <mat-form-field appearance="outline" class="no-padding">
                 <mat-label>Estado</mat-label>
-                <input matInput formControlName="state">
+                <input matInput formControlName="state" [ngxInputLoader]="loadingZipCode">
             </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutGap="20px">
             <mat-form-field appearance="outline" class="no-padding" fxFlex="50">
                 <mat-label>Rua</mat-label>
-                <input matInput formControlName="streetName">
+                <input matInput formControlName="streetName" [ngxInputLoader]="loadingZipCode">
             </mat-form-field>
             <mat-form-field appearance="outline" class="no-padding" fxFlex="25">
                 <mat-label>Número</mat-label>
@@ -52,7 +60,7 @@
         <div fxLayout="row">
             <mat-form-field appearance="outline" class="no-padding" fxFlex="50">
                 <mat-label>Bairro</mat-label>
-                <input matInput formControlName="neighborhood">
+                <input matInput formControlName="neighborhood" [ngxInputLoader]="loadingZipCode">
             </mat-form-field>
         </div>
 
