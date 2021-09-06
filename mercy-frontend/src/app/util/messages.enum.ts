@@ -4,5 +4,6 @@ export enum MessagesEnum {
     InvalidForm = 'Preencha todo o formulário',
     InvalidZipCode = 'CEP inválido!',
     InvalidCpf = 'CPF inválido!',
-    PatientAdded = 'Paciente adicionado com sucesso!'
+    PatientAdded = 'Paciente adicionado com sucesso!',
+    WipWarning = 'Seção em construção'
 }

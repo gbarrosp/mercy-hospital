@@ -19,9 +19,9 @@ export class AuthGuard implements CanActivate {
 
   verifyPermission(): boolean {
 
-    if (localStorage.getItem('currentUser')) {
+    // if (localStorage.getItem('currentUser')) {
       return true;
-    }
+    // }
     // not logged in so redirect to login page with the return url
     this.router.navigate([Views.login.url]);
     return false;

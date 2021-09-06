@@ -14,11 +14,7 @@ import { Views } from 'src/app/util/views.enum';
 })
 export class LandingComponent implements OnInit {
 
-  @ViewChild(MatExpansionPanel) expansionPanel: MatExpansionPanel ;
-
   loginForm: FormGroup;
-  recoverForm: FormGroup;
-  panelOpenState: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -35,9 +31,6 @@ export class LandingComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       username: [null , Validators.required],
       password: [null , Validators.required],
-    });
-    this.recoverForm = this.formBuilder.group({
-      email: [null , [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]]
     });
   }
 

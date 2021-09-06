@@ -1,11 +1,32 @@
 <mat-toolbar>
   <div fxFill fxLayout="row" fxLayoutAlign="space-between center">
-    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
-      <mat-icon>person</mat-icon>
-      <span>{{user}}</span>
+    <div fxLayout="row" fxLayoutAlign="start" class="menu">
+      <button mat-button (click)="goToPatients()">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span>Pacientes</span>
+        </div>
+      </button>
+      <button mat-button (click)="openWipWarning()">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span>Médicos</span>
+        </div>
+      </button>
+      <button mat-button (click)="openWipWarning()">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span>Medicamentos</span>
+        </div>
+      </button>
+      <button mat-button (click)="openWipWarning()">
+        <div fxLayout="row" fxLayoutAlign="space-between center">
+          <span>Prescrições</span>
+        </div>
+      </button>
     </div>
-    <button mat-icon-button class="example-icon" (click)="logout()">
-      <mat-icon>logout</mat-icon>
+    <button mat-button class="logout-btn" (click)="logout()">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <span>SAIR</span>
+        <mat-icon>logout</mat-icon>
+      </div>
     </button>
   </div>
 </mat-toolbar>
