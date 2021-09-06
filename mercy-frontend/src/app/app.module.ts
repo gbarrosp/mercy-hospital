@@ -17,6 +17,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxInputLoaderModule } from 'ngx-input-loader';
+import { IConfig, NgxMaskModule } from 'ngx-mask';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,9 +32,12 @@ import { AuthInterceptor } from './services/auth/auth.interceptor';
 import { AuthService } from './services/views/auth.service';
 import { DoctorService } from './services/views/doctor.service';
 import { PatientService } from './services/views/patient.service';
+import { ZipCodeService } from './services/views/zipCode.service';
 import { getPtPaginatorIntl } from './util/pt-paginator-intl';
 import { LandingRoutingModule } from './views/landing/landing-routing.module';
 import { LandingComponent } from './views/landing/landing.component';
+
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
   declarations: [
@@ -60,12 +66,15 @@ import { LandingComponent } from './views/landing/landing.component';
     MatCardModule,
     MatIconModule,
     MatSelectModule,
+    NgxMatSelectSearchModule,
     MatToolbarModule,
     MatDialogModule,
     MaterialFileInputModule,
     MatSnackBarModule,
     MatExpansionModule,
     HttpClientModule,
+    NgxInputLoaderModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
@@ -73,7 +82,8 @@ import { LandingComponent } from './views/landing/landing.component';
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: {duration: 5000}},
     AuthService,
     PatientService,
-    DoctorService
+    DoctorService,
+    ZipCodeService
   ],
   bootstrap: [AppComponent]
 })
