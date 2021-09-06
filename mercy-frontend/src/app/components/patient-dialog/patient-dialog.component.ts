@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Doctor } from 'src/app/models/doctor.model';
 import { Patient } from 'src/app/models/patient.model';
@@ -23,6 +23,7 @@ export class PatientDialogComponent implements OnInit {
   invalidCpf: boolean = false;
   doctors: Doctor[];
   showSuffix: boolean;
+  isEditing: boolean = false;
 
   constructor(
     private zipCodeService: ZipCodeService,
@@ -30,12 +31,13 @@ export class PatientDialogComponent implements OnInit {
     private patientService: PatientService,
     private snackbar: MatSnackBar,
     private formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private dialogRef: MatDialogRef<PatientDialogComponent>,
   ) { }
 
   ngOnInit(): void {
     this.loadData()
-    this.initForm();
+    this.initForm()
   }
 
   loadData(){
@@ -61,6 +63,11 @@ export class PatientDialogComponent implements OnInit {
     });
     this.checkZipCodeOnChanges()
     this.validateCpf()
+    if (this.data) {
+      this.isEditing = true
+      this.patient = this.data
+      this.fillForm()
+    }
   }
 
   checkZipCodeOnChanges(){
@@ -83,21 +90,6 @@ export class PatientDialogComponent implements OnInit {
       }
     })
 
-  }
-
-  onSubmit() {
-    if (this.patientForm.valid){
-      this.setPatientData()
-      this.patientService.newPatient(this.patient).subscribe(response => {
-        this.snackbar.open(MessagesEnum.PatientAdded);
-        this.close(true)
-      }, error => {
-        this.snackbar.open(generalExceptionTreatment(error), 'Fechar');
-      }
-      )
-    } else {
-      this.snackbar.open(MessagesEnum.InvalidForm);
-    }
   }
 
   validateCpf() {
@@ -134,9 +126,52 @@ export class PatientDialogComponent implements OnInit {
     })
   }
 
+  fillForm(){
+    this.patientForm.patchValue({
+      "name": this.patient.name,
+      "cpf": this.patient.cpf,
+      "phoneNumber": this.patient.phoneNumber,
+      "doctorCpf": this.patient.doctor.cpf,
+      "zipCode": this.patient.address.zipCode,
+      "streetName": this.patient.address.streetName,
+      "number": this.patient.address.number,
+      "additionalInfo": this.patient.address.additionalInfo,
+      "neighborhood": this.patient.address.neighborhood,
+      "city": this.patient.address.city,
+      "state": this.patient.address.state,
+      "observation": this.patient.observation
+    })
+  }
+
   raiseInvalidCpf(){
     this.invalidCpf = true
     this.snackbar.open(MessagesEnum.InvalidCpf);
+  }
+
+  onSubmit() {
+    if (this.patientForm.valid && !this.invalidCpf){
+      this.setPatientData()
+      if (this.isEditing){
+        this.patientService.editPatient(this.patient).subscribe(response => {
+            this.snackbar.open(MessagesEnum.PatientEdited);
+            this.close(true)
+          }, error => {
+            this.snackbar.open(generalExceptionTreatment(error), 'Fechar');
+          }
+        )
+      } else {
+        this.patientService.newPatient(this.patient).subscribe(response => {
+            this.snackbar.open(MessagesEnum.PatientAdded);
+            this.close(true)
+          }, error => {
+            this.snackbar.open(generalExceptionTreatment(error), 'Fechar');
+          }
+        )
+      }
+    } else {
+      let msg = this.invalidCpf ? MessagesEnum.InvalidCpf : MessagesEnum.InvalidForm
+      this.snackbar.open(msg);
+    }
   }
 
   setPatientData(){
@@ -144,7 +179,7 @@ export class PatientDialogComponent implements OnInit {
       this.patient.name = formData.name
       this.patient.cpf = formData.cpf
       this.patient.phoneNumber = formData.phoneNumber
-      this.patient.doctor = formData.doctorCpf
+      this.patient.doctor = this.getDoctorByCpf(formData.doctorCpf)
       this.patient.observation = formData.observation
 
       this.patient.address.city = formData.city

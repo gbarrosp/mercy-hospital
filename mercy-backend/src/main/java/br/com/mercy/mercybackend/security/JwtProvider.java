@@ -61,16 +61,4 @@ public class JwtProvider {
         return false;
     }
 
-    public boolean validateTokenExpiration(String authToken) {
-        try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
-        } catch (ExpiredJwtException e) {
-            logger.info("Expired JWT token. A new one will be provided.");
-            return true;
-        }catch (Exception e) {
-            logger.error("An error occured while validating token expiration. " + e.getMessage());
-        }
-        return false;
-    }
-
 }

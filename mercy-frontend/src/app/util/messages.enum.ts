@@ -5,5 +5,6 @@ export enum MessagesEnum {
     InvalidZipCode = 'CEP inválido!',
     InvalidCpf = 'CPF inválido!',
     PatientAdded = 'Paciente adicionado com sucesso!',
+    PatientEdited = 'Paciente editado com sucesso!',
     WipWarning = 'Seção em construção'
 }

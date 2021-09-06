@@ -3,12 +3,8 @@
         <span>Informações</span>
         <mat-form-field appearance="outline" class="no-padding">
             <mat-label>Médico</mat-label>
-            <!-- <input matInput formControlName="doctorCpf"> -->
-            <mat-select formControlName="doctorCpf" #singleSelect>
-                <!-- <mat-option>
-                  <ngx-mat-select-search [formControl]="bankFilterCtrl"></ngx-mat-select-search>
-                </mat-option> -->
-                <mat-option *ngFor="let doctor of doctors" [value]="doctor">
+            <mat-select formControlName="doctorCpf">
+                <mat-option *ngFor="let doctor of doctors" [value]="doctor.cpf">
                   {{doctor.name}}
                 </mat-option>
               </mat-select>
@@ -71,7 +67,7 @@
             <textarea  matInput formControlName="observation"></textarea>
         </mat-form-field>
         <div fxLayout="row" fxLayoutAlign="end" fxLayoutGap="20px">
-            <button mat-raised-button color="basic" (click)="close(false)">FECHAR</button>
+            <button mat-raised-button color="basic" type="button" (click)="close(false)">FECHAR</button>
             <button mat-flat-button type="submit" color="primary">SALVAR</button>
         </div>
     </div>

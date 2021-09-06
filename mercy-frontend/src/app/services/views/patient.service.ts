@@ -15,13 +15,21 @@ export class PatientService {
   getAllPatients() : Observable<Patient[]> {
     return this.httpClient.get<any>(`${Constants.BASE_URL}patient/all`, {headers: this.getHeaders()}).pipe(
       map((response: Response) => {
-        const resp: Patient[] = response.data;
+        const resp: Patient[] = response.data.sort((a, b) => a.name.localeCompare(b.name));
         return resp;
       }));
   }
   
   newPatient(patient: Patient) : Observable<Patient> {
     return this.httpClient.post<any>(`${Constants.BASE_URL}patient/new`, patient, {headers: this.getHeaders()}).pipe(
+      map((response: Response) => {
+        const resp: Patient = response.data;
+        return resp
+      }));
+  }
+  
+  editPatient(patient: Patient) : Observable<Patient> {
+    return this.httpClient.patch<any>(`${Constants.BASE_URL}patient/edit`, patient, {headers: this.getHeaders()}).pipe(
       map((response: Response) => {
         const resp: Patient = response.data;
         return resp
