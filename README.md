@@ -17,7 +17,7 @@ Para iniciar a API navegue até o diretório `mercy-backend` e então rode o com
 Para iniciar o frontend navegue até o diretório `mercy-backend` e então rode os comandos abaixo
 
 > npm i
-
+>
 > ng serve
 
 Então poderá acessar o projeto em http://localhost:4200
