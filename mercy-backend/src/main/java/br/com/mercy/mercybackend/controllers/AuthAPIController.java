@@ -2,8 +2,6 @@ package br.com.mercy.mercybackend.controllers;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -27,10 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.mercy.mercybackend.dtos.AuthenticatedUser;
 import br.com.mercy.mercybackend.dtos.LoginFormDTO;
+import br.com.mercy.mercybackend.entities.DoctorEntity;
 import br.com.mercy.mercybackend.entities.UserEntity;
-import br.com.mercy.mercybackend.repositories.UserRepository;
 import br.com.mercy.mercybackend.response.Response;
 import br.com.mercy.mercybackend.security.JwtProvider;
+import br.com.mercy.mercybackend.services.DoctorService;
+import br.com.mercy.mercybackend.services.UserService;
 import br.com.mercy.mercybackend.util.ExceptionTreatment;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -47,7 +47,10 @@ public class AuthAPIController {
     AuthenticationManager authenticationManager;
  
     @Autowired
-    UserRepository userRepository;
+    private UserService userService;
+ 
+    @Autowired
+    private DoctorService doctorService;
   
     @Autowired
     PasswordEncoder encoder;
@@ -58,28 +61,15 @@ public class AuthAPIController {
     @Value("${mercy.app.jwtExpiration}")
     private int jwtExpiration;
     
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginFormDTO loginRequest) {
     	Response<AuthenticatedUser> response = new Response<AuthenticatedUser>();
-    	AuthenticatedUser authUser = new AuthenticatedUser();
         
         try {
-            Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = jwtProvider.generateJwtToken(authentication);
             
-            UserEntity user = userRepository.findByUsername(loginRequest.getUsername()).get();
-            authUser = modelMapper.map(user, AuthenticatedUser.class);
-            
-            authUser.setToken(jwt);
-            Instant instant = Instant.now().plus(jwtExpiration, ChronoUnit.MILLIS);
-            authUser.setExpirationDate(instant);
-            
+            UserEntity user = userService.findByUsername(loginRequest.getUsername()).get();
+            AuthenticatedUser authUser = createAuthUser(loginRequest.getUsername(), loginRequest.getPassword());
+            authUser.setUsername(user.getUsername());
             response.setData(authUser);
             log.debug("User has logged in successfully!");
 
@@ -89,34 +79,45 @@ public class AuthAPIController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
     }
+
+    @PostMapping(value = "/sign-up")
+	public ResponseEntity<Response<AuthenticatedUser>> newDoctor(@Valid @RequestBody DoctorEntity doctor) {
+		Response<AuthenticatedUser> response = new Response<AuthenticatedUser>();
+
+		try {
+			if(userService.existsByUsername(doctor.getUser().getUsername())) {
+				return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+			}
+            String decodedPassword = doctor.getUser().getPassword();
+			UserEntity newUser = modelMapper.map(doctor.getUser(), UserEntity.class);
+			newUser.setPassword(encoder.encode(doctor.getUser().getPassword()));
+			userService.saveUser(newUser);
+			DoctorEntity newDoctor = doctorService.newDoctor(doctor);
+
+            AuthenticatedUser authUser = createAuthUser(doctor.getUser().getUsername(), decodedPassword);
+            authUser.setUsername(newDoctor.getUser().getUsername());
+            response.setData(authUser);
+			return ResponseEntity.ok(response);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
+	}
  
-    // @PostMapping("/signup")
-    // public ResponseEntity<Response<UserEntity>> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
-    //     Response<UserEntity> response = new Response<UserEntity>();
+    private AuthenticatedUser createAuthUser(String username, String password){
+        AuthenticatedUser authUser = new AuthenticatedUser();
+        Authentication authentication = authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(username,password)
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtProvider.generateJwtToken(authentication);
+                
+        authUser.setToken(jwt);
+        Instant instant = Instant.now().plus(jwtExpiration, ChronoUnit.MILLIS);
+        authUser.setExpirationDate(instant);
 
-    //     if(userRepository.existsByUsername(signUpRequest.getUsername())) {
-    //         log.debug("An error occured while signing up");
-    //         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
-    //     }
- 
-    //     if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-    //         log.debug("An error occured while signing up");
-    //         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
-    //     }
-    //     try {
-    //         UserEntity newUser = modelMapper.map(signUpRequest, UserEntity.class);
-    //         newUser.setPassword(encoder.encode(signUpRequest.getPassword()));
-
-    //         userRepository.save(newUser);
-    //         response.setData(newUser);
-    //         log.debug("UserEntity registered successfully!");
-    //         return ResponseEntity.ok(response);
-    //     } catch (Exception e) {
-    //         ExceptionTreatment.setExceptionMessage("Error while signing up. ", e, response, log);
-    //         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-    //     }
-    // }
-
+        return authUser;
+    }
 }
 
 

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Doctor } from 'src/app/models/doctor.model';
+import { AuthService } from 'src/app/services/views/auth.service';
 import { DoctorService } from 'src/app/services/views/doctor.service';
 import { generalExceptionTreatment } from 'src/app/util/error-handler';
 import { MessagesEnum } from 'src/app/util/messages.enum';
@@ -20,7 +21,7 @@ export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
 
   constructor(
-    private doctorService: DoctorService,
+    private authService: AuthService,
     private snackbar: MatSnackBar,
     private router: Router,
     private formBuilder: FormBuilder
@@ -44,7 +45,7 @@ export class SignUpComponent implements OnInit {
   signUp(){
     if (this.signUpForm.valid && this.validatePassword()){
       this.bindDoctorData()
-      this.doctorService.newDoctor(this.newDoctor).subscribe(
+      this.authService.register(this.newDoctor).subscribe(
         response => {
           if (response){
             this.snackbar.open(MessagesEnum.SuccessUserSignUp);

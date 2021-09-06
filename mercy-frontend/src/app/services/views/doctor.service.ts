@@ -20,14 +20,6 @@ export class DoctorService {
       }));
   }
 
-  newDoctor(doctor: Doctor) : Observable<Doctor> {
-    return this.httpClient.post<any>(`${Constants.BASE_URL}doctor/new`, doctor, {headers: this.getHeaders()}).pipe(
-      map((response: Response) => {
-        const resp: Doctor = response.data;
-        return resp
-      }));
-  }
-
   private getHeaders(): HttpHeaders {
     const headers = new HttpHeaders();
     return headers;

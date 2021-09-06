@@ -35,15 +35,15 @@ export class LandingComponent implements OnInit {
   }
 
   signIn(){
-    // let formData = this.loginForm.getRawValue()
-    // this.authService.login(formData.username, formData.password).subscribe(
-    //   (response)=>{
+    let formData = this.loginForm.getRawValue()
+    this.authService.login(formData.username, formData.password).subscribe(
+      (response)=>{
         this.router.navigate([Views.patients.url])
-      // },
-      // (error)=>{
-      //   console.log(error)
-      // }
-    // )
+      },
+      (error)=>{
+        console.log(error)
+      }
+    )
   }
 
   goToSignUp(){

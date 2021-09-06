@@ -23,10 +23,10 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     return next.handle(request).pipe(tap((ev: HttpEvent<any>) => {
-      let authRoute = request.url.endsWith('/login') || request.url.endsWith('/signup') || request.url.endsWith('/reset')
+      let authRoute = request.url.endsWith('/login') || request.url.endsWith('/sign-up')
       if (ev instanceof HttpResponse) {
         if (authRoute && request.method === 'POST' && ev.body) {
-          localStorage.setItem('currentUser', JSON.stringify(ev.body));
+          localStorage.setItem('currentUser', JSON.stringify(ev.body.data));
         }
       }
     }, (error: any) => {
