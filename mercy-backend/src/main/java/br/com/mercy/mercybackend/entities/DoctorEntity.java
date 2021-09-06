@@ -11,7 +11,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,7 +35,6 @@ public class DoctorEntity {
 	private UserEntity user;
 
     @NotEmpty
-	@Size(min = 6, max = 90)
 	private String name;
 
     @Column(name = "phone_number")

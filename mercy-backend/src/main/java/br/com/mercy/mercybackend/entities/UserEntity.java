@@ -29,7 +29,6 @@ public class UserEntity {
 	private Long id;
 
 	@NotEmpty
-	@Size(min = 6, max = 30)
 	private String username;
 
 	@NotEmpty
