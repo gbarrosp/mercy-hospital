@@ -6,5 +6,6 @@ export enum MessagesEnum {
     InvalidCpf = 'CPF inválido!',
     PatientAdded = 'Paciente adicionado com sucesso!',
     PatientEdited = 'Paciente editado com sucesso!',
+    PatientDeleted = 'Paciente excluído com sucesso!',
     WipWarning = 'Seção em construção'
 }

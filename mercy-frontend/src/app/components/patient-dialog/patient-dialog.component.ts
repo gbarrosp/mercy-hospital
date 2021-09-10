@@ -191,6 +191,16 @@ export class PatientDialogComponent implements OnInit {
       this.patient.address.zipCode = formData.zipCode
   }
 
+  deletePatient(){
+    if (this.isEditing){
+      this.patientService.deletePatient(this.patient.id).subscribe(response => {
+        this.snackbar.open(MessagesEnum.PatientDeleted);
+      }, error => {
+        this.snackbar.open(generalExceptionTreatment(error), 'Fechar');
+      })
+    }
+  }
+
   close(reload: boolean){
     this.dialogRef.close(reload)
   }

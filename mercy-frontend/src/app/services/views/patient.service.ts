@@ -35,6 +35,14 @@ export class PatientService {
         return resp
       }));
   }
+  
+  deletePatient(patientId: number) : Observable<Patient> {
+    return this.httpClient.delete<any>(`${Constants.BASE_URL}patient/delete/${patientId}`, {headers: this.getHeaders()}).pipe(
+      map((response: Response) => {
+        const resp: Patient = response.data;
+        return resp
+      }));
+  }
 
   private getHeaders(): HttpHeaders {
     const headers = new HttpHeaders();
