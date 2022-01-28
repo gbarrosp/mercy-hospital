@@ -1,0 +1,35 @@
+version: '3.6'
+
+services:
+
+  frontend:
+    build:
+      context: ./mercy-frontend
+      dockerfile: Dockerfile
+    container_name: mercy-frontend
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    expose:
+      - 80
+
+  backend:
+    build:
+      context: ./mercy-backend
+      dockerfile: Dockerfile
+    container_name: mercy-backend
+    depends_on:
+      - postgres-db
+    ports:
+      - "81:80"
+    expose:
+      - 80
+
+  postgres-db:
+    container_name: mercy-db
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+    ports:
+      - "5432:5432"

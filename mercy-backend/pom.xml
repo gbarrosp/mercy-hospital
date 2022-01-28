@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com.mercy</groupId>
 	<artifactId>mercy-backend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>mercy-backend</name>
 	<description>Mercy Hospital project  API </description>
 	<properties>

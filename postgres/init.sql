@@ -1,0 +1,2 @@
+CREATE DATABASE "mercy-db";
+GRANT ALL PRIVILEGES ON DATABASE "mercy-db" TO master;
